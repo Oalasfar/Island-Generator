@@ -1,3 +1,5 @@
+Repository originally from alternate account: Alasfaro
+
 # Assignment A2: Mesh Generator
 
 - Virochaan Ravichandran Gowri [ravicv3@mcmaster.ca]
