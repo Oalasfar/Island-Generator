@@ -1,0 +1,54 @@
+@startuml
+
+class Main {
+    -main(String[]): void
+}
+class DotGen {
+    -width: int
+    -height: int
+    -square_size: int
+    -generate(): Mesh
+    #extractPropertyAverage(): String
+}
+class Vertex {
+    -x: double
+    -y: double
+    -properties: List<Property>
+}
+class Segment {
+    -v1Idx: int
+    -v2Idx: int
+    +getV1Idx(): int
+    +getV2Idx(): int
+    +getPropertiesList(): List<Property>
+}
+class Polygon {
+    -centroid_idx: int
+    -segment_idxs: int[]
+    neighbors_idxs: int[]
+}
+class MeshFactory {
+    +read(String): Mesh
+    +write(Mesh, String): void
+}
+class Property {
+    -key: String
+    -value: String
+}
+
+Main .. DotGen
+Main .. MeshFactory
+Mesh *--> Vertex : 0..n \n{ordered} 
+Mesh *--> Segment : 0..n \n{ordered}
+Mesh *--> Polygon : 0..n \n{ordered}
+Mesh *--> Property : 0..n \n{ordered}
+Vertex *--> Property : 0..n \n{ordered}
+Segment *--> Property : 0..n \n{ordered}
+Polygon *--> Property : 0..n \n{ordered}
+Structs .. Vertex
+Structs .. Segment
+Structs .. Polygon
+Structs .. Mesh
+DotGen .. Mesh
+
+@enduml

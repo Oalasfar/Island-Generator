@@ -1,0 +1,99 @@
+@startuml
+
+class Main {
+    -main(String[]): void
+}
+class GraphicRenderer {
+    -aMesh: Mesh
+    -canvas: Graphics2D
+    -debug: Boolean
+    -thickset: Boolean
+    -thick: int
+    -alphaSet: Boolean
+    -alpha: int
+
+    #render(): void
+    -averageSegmentColor(): Color
+    ~extractColor(): Color
+    -extractThickness(): int
+    +extractStroke(): Stroke
+}
+class MeshDump {
+    #dump(): void
+}
+class SVGCanvas {
+    -build(): Graphics2D
+    +write(): void
+}
+class MeshFactory {
+    +read(String): Mesh
+    +write(Mesh, String): void
+}
+class Vertex {
+    -x: double
+    -y: double
+    -getX(): double
+    +getY(): double
+}
+class Segment {
+    -v1Idx: int
+    -v2Idx: int
+    +getV1Idx(): int
+    +getV2Idx(): int
+    +getPropertiesList(): List<Property>
+}
+class Polygon {
+    -segmentsIdx: int[]
+    -centroidIdx: int[]
+    -neighbourIdx: int[]
+    #getSegmetnIdx()
+    -getCentroidIdx(): int
+    +getNeighborIdxsCount()
+
+}
+class Property {
+    -key: String
+    -value: Object
+}
+class Graphics2D {
+    -canvas
+}
+class Mesh {
+    +verticesList
+    +segmentsList
+    +polygonsList
+
+    -getVerticesList()
+    -getSegmentsList()
+    -getPolygonsList()
+
+}
+
+Main .. MeshFactory
+Main .. GraphicRenderer
+Main .. GraphicRenderer
+Main .. MeshDump
+Main .. Mesh
+Main .. SVGCanvas
+
+Mesh *--> Vertex : 0..n \n{ordered} 
+Mesh *--> Segment : 0..n \n{ordered}
+Mesh *--> Polygon : 0..n \n{ordered}
+Mesh *--> Property : 0..n \n{ordered}
+Vertex *--> Property : 0..n \n{ordered}
+Segment *--> Property : 0..n \n{ordered}
+Polygon *--> Property : 0..n \n{ordered}
+Structs .. Vertex
+Structs .. Segment
+Structs .. Polygon
+Structs .. Mesh
+
+MeshDump .. MeshFactory
+MeshDump .. Mesh
+
+GraphicRenderer ..Mesh
+GraphicRenderer .. Graphics2D
+GraphicRenderer .. Color
+GraphicRenderer .. Stroke
+
+@enduml
